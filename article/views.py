@@ -3,7 +3,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .form import ArticlePostForm
-from .models import ArticlePost
+from .models import ArticlePost, ArticleColumn
 from comment.models import Comment
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
@@ -68,6 +68,8 @@ def article_create(request):
         if article_post_form.is_valid():
             # 保存数据，  但暂时不提交到数据库中
             new_article = article_post_form.save(commit=False)
+            if request.POST['column'] != 'none':
+                new_article.column = ArticleColumn.objects.get(id=request.POST['column'])
             #    指定   id = 1   为作者
             new_article.author = User.objects.get(id=request.user.id)
             #    将文章保存到数据库中

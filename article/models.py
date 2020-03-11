@@ -7,11 +7,21 @@ from django.utils import timezone
 from django.urls import reverse
 
 
+class ArticleColumn(models.Model):
+    title = models.CharField(max_length=100, blank=True)
+    created = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return self.title
+
+
 class ArticlePost(models.Model):
     # ForeignKey 定义的关系，每个或多个  ArticlePost  对象都关联到一个    User  对象
     author = models.ForeignKey(User, on_delete=models.CASCADE)
 
     title = models.CharField(max_length=100)
+
+    column = models.ForeignKey(ArticleColumn, null=True, blank=True, on_delete=models.CASCADE, related_name='article')
 
     body = models.TextField()
 
