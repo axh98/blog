@@ -1,6 +1,7 @@
 blog/settings.py
 blog/settings.back.py
 config/nginx/blog.conf
+.idea/
 /Dockerfile
 article/migrations
 article/__pycache__
