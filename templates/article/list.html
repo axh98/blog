@@ -9,12 +9,13 @@
             <ol class="breadcrumb">
                 <li class="breadcrumb-item">
                     <!-- 在   url  末尾附上  ?key = value的键值对，视图中可通过   request.GET.get('key')   获取  value -->
-                    <a href="{% url 'article:article_list' %}?search={{ search }}">
+{#                      默认是按照发布时间倒序                #}
+                    <a href="{% url 'article:article_list' %}?search={{ search }}&column={{ column }}&tag={{ tag }}">
                         最新
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a href="{% url 'article:article_list' %}?order=total_view&search={{ search }}">
+                    <a href="{% url 'article:article_list' %}?order=total_view&search={{ search }}&column={{ column }}&tag={{ tag }}">
                         最热
                     </a>
                 </li>
@@ -49,7 +50,7 @@
                 <div class="col-12">
                     <!-- 栏目 -->
                     {% if article.column %}
-                        <button type="button"
+                        <a
                                 class="btn btn-sm mb-2
                         {% if article.column.title == 'Django' %}
                             btn-success
@@ -60,11 +61,17 @@
                         {% else %}
                             btn-primary
                         {% endif %}
-                    "
+                    " href="{% url 'article:article_list' %}?column={{ article.column.id }}"
                         >
                             {{ article.column }}
-                        </button>
+                        </a>
                     {% endif %}
+                    <span>
+                        {% for tag in article.tags.all %}
+                        {#          标签过滤                  #}
+                            <a href="{% url 'article:article_list' %}?tag={{ tag }}" class="badge badge-secondary">{{ tag }}</a>
+                        {% endfor %}
+                    </span>
                     <!-- 标题 -->
                     <h4>
                         <b>
@@ -88,16 +95,18 @@
                     {{ article.total_views }} 浏览&nbsp;&nbsp;&nbsp;
                 </span>
                         <span style="color: blue;">
-                    {{ article.created|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
+                    {{ article.create_time|date:'Y-m-d' }} 发布&nbsp;&nbsp;&nbsp;
                 </span>
                         <span style="color: darkred;">
-                    {{ article.updated|date:'Y-m-d' }} 更新
+                    {{ article.update_time|date:'Y-m-d' }} 更新
                 </span>
                     </p>
                     <hr>
                 </div>
             {% endfor %}
         </div>
+
+
 
 
         <!-- 页码导航 -->

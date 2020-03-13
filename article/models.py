@@ -5,6 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
+from taggit.managers import TaggableManager
 
 
 class ArticleColumn(models.Model):
@@ -22,6 +23,9 @@ class ArticlePost(models.Model):
     title = models.CharField(max_length=100)
 
     column = models.ForeignKey(ArticleColumn, null=True, blank=True, on_delete=models.CASCADE, related_name='article')
+
+    # 这里标签不是内置字段，是库中的  TaggableManager 
+    tags = TaggableManager(blank=True)
 
     body = models.TextField()
 
