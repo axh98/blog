@@ -10,5 +10,6 @@ userprofile/__pycache__
 comment/migrations
 comment/__pycache__
 mysql
+/media
 blog/__pycache__
 docker-compose.yml
