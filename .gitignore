@@ -10,5 +10,7 @@ userprofile/__pycache__
 comment/migrations
 comment/__pycache__
 mysql
+/media
+qiniu_info.py
 blog/__pycache__
 docker-compose.yml
